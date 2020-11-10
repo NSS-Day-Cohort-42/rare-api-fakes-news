@@ -1,9 +1,11 @@
 import json
 from django.http import HttpResponse
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
-from rest_framework.authtoken.models import Token
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework import status
+from rest_framework.authtoken.models import Token
+from rareapi.models import RareUser
 
 
 
@@ -56,9 +58,12 @@ def register_user(request):
         last_name=req_body['last_name']
     )
 
+    rare_user = RareUser.objects.create(
+        bio=req_body['bio'],
+        user=new_user
+    )
 
-    # user = new_user
-    # user.save()
+    rare_user.save()
 
 
     # Use the REST Framework's token generator on the new user account
@@ -66,4 +71,4 @@ def register_user(request):
 
     # Return the token to the client
     data = json.dumps({"token": token.key})
-    return HttpResponse(data, content_type='application/json')
+    return HttpResponse(data, content_type='application/json', status=status.HTTP_201_CREATED)
