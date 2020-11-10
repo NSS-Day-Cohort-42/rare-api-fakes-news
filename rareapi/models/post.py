@@ -11,3 +11,4 @@ class Post(models.Model):
     title = models.CharField(max_length=75)
     publication_date = models.IntegerField()
     image_url = models.CharField(max_length=256)
+    approved = models.BooleanField(default=False)
