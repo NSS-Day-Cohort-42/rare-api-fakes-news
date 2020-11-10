@@ -11,3 +11,14 @@ class RareUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     
+    @property
+    def active(self):
+        """joined property, which will be calculated per user
+        Returns:
+            boolean -- If the user has joined the event or not
+        """
+        return self.__active
+
+    @active.setter
+    def active(self, value):
+        self.__active = value
