@@ -17,11 +17,9 @@ class Categories(ViewSet):
         Returns:
             Response -- JSON serialized game instance
         """
-
-        category = Category.objects.get(user=request.auth.user)
-
+        
         category = Category()
-        Category.label = request.data["label"]
+        category.label = request.data["label"]
 
         try:
             category.save()
