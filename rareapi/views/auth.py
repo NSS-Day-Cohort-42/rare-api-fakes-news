@@ -1,3 +1,5 @@
+'''Handles the authentication of a user'''
+
 import json
 from django.http import HttpResponse
 from django.contrib.auth import authenticate
