@@ -62,6 +62,7 @@ def register_user(request):
 
     rare_user = RareUser.objects.create(
         bio=req_body['bio'],
+        created_on=req_body['created_on'],
         user=new_user
     )
 
