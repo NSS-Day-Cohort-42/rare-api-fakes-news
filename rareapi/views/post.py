@@ -11,6 +11,17 @@ from rareapi.models import Post, RareUsers
 
 class Posts(ViewSet):
 
+    def list(self, request):
+
+        posts = Post.objects.all()
+
+        user_id = self.request.query_params.get('user_id', None)
+        if user_id is not None:
+            posts = posts.filter(user_id=user_id)
+
+        serializer = PostSerializer(posts, many=True, context={'request': request})
+        return Response(serializer.data)
+
     def retrieve(self, request, pk=None):
         """Handle GET requests for single game
         Returns:
@@ -30,16 +41,7 @@ class Posts(ViewSet):
 
    
 
-    def list(self, request):
-
-        post = Post.objects.all()
-
-        user_id = self.request.query_params.get('user_id', None)
-        if user_id is not None:
-            posts = posts.filter(user_id=user_id)
-
-        serializer = PostSerializer(posts, many=True, context={'request': request})
-        return Response(serializer.data)
+    
 
 
 
@@ -48,12 +50,13 @@ class Posts(ViewSet):
 class PostRareUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = RareUsers
-        fields = ('id', 'bio', 'fullname', 'username')
+        fields = ('id', 'bio', 'user')
+        depth = 1
 
 """Basic Serializer for single post"""
 class PostSerializer(serializers.ModelSerializer):
     user = PostRareUserSerializer(many=False)
     class Meta:
-        model = Posts
+        model = Post
         fields = ('id', 'title', 'publication_date', 'content', 'user', 'category')
     

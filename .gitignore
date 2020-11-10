@@ -150,3 +150,7 @@ dmypy.json
 .prof
 
 # End of https://www.toptal.com/developers/gitignore/api/django
+
+.vscode
+rare.sql
+rare.session.sql
