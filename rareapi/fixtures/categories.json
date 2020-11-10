@@ -3,14 +3,32 @@
         "model": "rareapi.category",
         "pk": 1,
         "fields": {
+<<<<<<< HEAD
             "label": "Beauty"
+=======
+            "label": "Politics"
+>>>>>>> main
         }
     },
     {
         "model": "rareapi.category",
         "pk": 2,
         "fields": {
+<<<<<<< HEAD
             "label": "Health"
         }
     }
+=======
+            "label": "Sports"
+        }
+    },
+    {
+        "model": "rareapi.category",
+        "pk": 3,
+        "fields": {
+            "label": "Self Help"
+        }
+    }
+    
+>>>>>>> main
 ]

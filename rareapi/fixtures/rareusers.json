@@ -3,6 +3,7 @@
         "model": "rareapi.rareuser",
         "pk": 1,
         "fields": {
+<<<<<<< HEAD
             "bio": "a rare user",
             "profile_image_url": "",
             "user": 1,
@@ -10,4 +11,23 @@
             "created_on": "2020-11-10T14:51:39.989Z"
         }
     }
+=======
+            "bio": "",
+            "profile_image_url": "",
+            "user": 1
+           
+        }
+    },
+
+    {
+        "model": "rareapi.rareuser",
+        "pk": 2,
+        "fields": {
+            "bio": "",
+            "profile_image_url": "",
+            "user": 2
+        }
+    }
+    
+>>>>>>> main
 ]

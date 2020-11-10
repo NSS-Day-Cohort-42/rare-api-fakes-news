@@ -5,6 +5,7 @@
         "fields": {
             "user": 1,
             "category": 1,
+<<<<<<< HEAD
             "title": "Title Test",
             "publication_date": "2020-08-28",
             "image_url": "",
@@ -12,4 +13,14 @@
             "approved": 1
         }
     }
+=======
+            "title": "Post title",
+            "publication_date": 1605037165815,
+            "image_url": "www.google.com",
+            "content": "Django is hard",
+            "approved": 1
+        }
+    }
+    
+>>>>>>> main
 ]

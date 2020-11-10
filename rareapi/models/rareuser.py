@@ -4,9 +4,7 @@ from django.contrib.auth.models import User
 
 
 class RareUser(models.Model):
-    """Database RareUser Model"""
-    bio = models.CharField(max_length=300)
-    profile_image_url = models.CharField(max_length=100)
-    created_on = models.DateTimeField()
-    active = models.BooleanField(default=True)
+    """RareUser database model"""
+    bio = models.CharField(max_length=500)
+    profile_image_url = models.CharField(max_length=500)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
