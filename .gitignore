@@ -154,3 +154,6 @@ dmypy.json
 
 settings.json
 rare.sql
+.vscode
+rare.sql
+rare.session.sql
