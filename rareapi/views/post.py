@@ -77,7 +77,7 @@ class Posts(ViewSet):
         user = request.auth.user
 
         if user is not None:
-            posts = posts.filter(user_id = user)
+            posts = posts.filter(user_id = user.id)
 
         serializer = PostSerializer(
             posts, many=True, context={'request': request})
@@ -89,3 +89,12 @@ class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = ('id', 'user', 'category', 'title', 'publication_date', 'image_url')
+
+
+# class PostRareUserSerializer(serializers.ModelSerializer):
+#     """Serializer for RareUser Info in a post"""      
+
+#     class Meta:
+#         model = RareUser
+#         fields = ('id', 'bio', 'user')
+#         depth = 1
