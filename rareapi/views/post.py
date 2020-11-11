@@ -2,12 +2,12 @@
 
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-from rest_framework import status
 from django.http import HttpResponseServerError
-from rest_framework.viewsets import ViewSet
-from rest_framework.response import Response
 from rest_framework import serializers
 from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.viewsets import ViewSet
+from rareapi.models import Category
 from rareapi.models import Post
 
 
@@ -20,32 +20,33 @@ class Posts(ViewSet):
         Returns:
             Response -- JSON serialized post instance
         """
-        user = RareUser.objects.get(user=request.auth.user)
+        user = request.auth.user
         post = Post()
 
         try:
             post.title = request.data["title"]
             post.content = request.data["content"]
-            post.publication_date = request.data["date"]
-            post.image_url = ""
+            post.publication_date = request.data["publication_date"]
+            post.image_url = request.data["image_url"]
             post.approved = 1
         except KeyError as ex:
             return Response({'message': 'Incorrect key was sent in request'}, status=status.HTTP_400_BAD_REQUEST)
 
-        post.user = user
+        post.user_id = user.id
 
         try:
-            category = Post.objects.get(pk=request.data["category_id"])
-            post.category = category
+            category = Category.objects.get(pk=request.data["category_id"])
+            post.category_id = category.id
         except Category.DoesNotExist as ex:
             return Response({'message': 'Post type provided is not valid'}, status=status.HTTP_400_BAD_REQUEST)
 
-        try:
-            post.save()
-            serializer = PostSerializer(post, context={'request': request})
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        except ValidationError as ex:
-            return Response({"reason": ex.message}, status=status.HTTP_400_BAD_REQUEST)
+        if user is not None:
+            try:
+                post.save()
+                serializer = PostSerializer(post, context={'request': request})
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            except ValidationError as ex:
+                return Response({"reason": ex.message}, status=status.HTTP_400_BAD_REQUEST)
     
 
     def destroy(self, request, pk=None):
@@ -88,13 +89,5 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ('id', 'user', 'category', 'title', 'publication_date', 'image_url')
-
-
-# class PostRareUserSerializer(serializers.ModelSerializer):
-#     """Serializer for RareUser Info in a post"""      
-
-#     class Meta:
-#         model = RareUser
-#         fields = ('id', 'bio', 'user')
-#         depth = 1
+        fields = ('id', 'user', 'category', 'title', 'publication_date', 'image_url', 'approved')
+        depth = 1
