@@ -20,9 +20,15 @@ class Posts(ViewSet):
         if user_id is not None:
             posts = posts.filter(user_id=user_id)
 
+        category_id = self.request.query_params.get('category_id', None)
+        if category_id is not None:
+            posts = posts.filter(category_id=category_id)
+
         
         serializer = PostSerializer(posts, many=True, context={'request': request})
         return Response(serializer.data)
+
+        
 
     def retrieve(self, request, pk=None):
         """Handle GET requests for single game

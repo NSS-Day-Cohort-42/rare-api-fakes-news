@@ -7,5 +7,6 @@
             "database": "db.sqlite3"
         }
     ],
-    "python.pythonPath": "/home/cwelshofer/.local/share/virtualenvs/rare-api-fakes-news-yr2E7QXU/bin/python"
+    "python.pythonPath": "/home/cwelshofer/.local/share/virtualenvs/rare-api-fakes-news-yr2E7QXU/bin/python",
+    "python.linting.pylintEnabled": true
 }
