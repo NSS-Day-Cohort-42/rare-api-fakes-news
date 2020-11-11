@@ -1,27 +1,11 @@
 {
-    "workbench.colorCustomizations": {
-        "activityBar.activeBackground": "#52c190",
-        "activityBar.activeBorder": "#965bc4",
-        "activityBar.background": "#52c190",
-        "activityBar.foreground": "#15202b",
-        "activityBar.inactiveForeground": "#15202b99",
-        "activityBarBadge.background": "#965bc4",
-        "activityBarBadge.foreground": "#e7e7e7",
-        "statusBar.background": "#3ba576",
-        "statusBar.foreground": "#e7e7e7",
-        "statusBarItem.hoverBackground": "#52c190",
-        "titleBar.activeBackground": "#3ba576",
-        "titleBar.activeForeground": "#e7e7e7",
-        "titleBar.inactiveBackground": "#3ba57699",
-        "titleBar.inactiveForeground": "#e7e7e799"
-    },
-    "peacock.color": "#3ba576",
     "sqltools.connections": [
         {
             "previewLimit": 50,
             "driver": "SQLite",
-            "name": "rare DB",
+            "name": "rareapi",
             "database": "db.sqlite3"
         }
-    ]
+    ],
+    "python.pythonPath": "/home/cwelshofer/.local/share/virtualenvs/rare-api-fakes-news-yr2E7QXU/bin/python"
 }
