@@ -6,7 +6,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers
 from rest_framework import status
-from rareapi.models import Post, RareUser
+from rareapi.models import Post, RareUser, Category
 from django.contrib.auth.models import User
 
 
@@ -40,10 +40,26 @@ class Posts(ViewSet):
             return Response(serializer.data)
         except Exception as ex:
             return HttpResponseServerError(ex)
+    
+    def update(self, request, pk=None):
+        """Handle PUT requests for posts"""
+
+        rareuser = RareUser.objects.get(user=request.auth.user)
+
+        post = Post.objects.get(pk=pk)
+        post.title = request.data["title"]
+        post.publication_date = request.data["publication_date"]
+        post.content = request.data["content"]
+        post.rareuser = rareuser
+
+        category = Category.objects.get(pk=request.data["category"])
+        post.category = category
+        post.save()
+
+        return Response({}, status=status.HTTP_204_NO_CONTENT)
         
       
    
-
     
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
