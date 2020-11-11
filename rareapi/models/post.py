@@ -1,5 +1,10 @@
 """Post model module"""
 from django.db import models
+<<<<<<< HEAD
+=======
+# from . import RareUser, Category
+
+>>>>>>> main
 
 class Post(models.Model):
     """Post database model"""
