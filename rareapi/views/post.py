@@ -14,11 +14,11 @@ class Posts(ViewSet):
     def list(self, request):
 
         posts = Post.objects.all()
+        user = request.auth.user
+        if user is not None:
+            posts = posts.filter(user_id=user.id)
 
         user_id = self.request.query_params.get('user_id', None)
-        if user_id is not None:
-            posts = posts.filter(user_id=user_id)
-
         serializer = PostSerializer(posts, many=True, context={'request': request})
         return Response(serializer.data)
 

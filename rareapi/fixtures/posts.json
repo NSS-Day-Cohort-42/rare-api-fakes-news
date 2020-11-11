@@ -15,9 +15,9 @@
     
     {
         "model": "rareapi.post",
-        "pk": 1,
+        "pk": 2,
         "fields": {
-            "user": 1,
+            "user": 2,
             "category": 1,
             "title": "Post title",
             "publication_date": "2020-09-09",
