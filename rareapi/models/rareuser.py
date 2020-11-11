@@ -1,4 +1,4 @@
-"""RareUser model module"""
+"""Database RareUser module"""
 from django.db import models
 from django.contrib.auth.models import User
 
