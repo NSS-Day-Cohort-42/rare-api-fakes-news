@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(max_length=75)),
-                ('publication_date', models.IntegerField()),
+                ('publication_date', models.DateField()),
                 ('image_url', models.CharField(max_length=256)),
                 ('content', models.TextField()),
                 ('approved', models.BooleanField(default=False)),
