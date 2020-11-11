@@ -1,5 +1,6 @@
 # insert imports here
 from .category import Category
+from .rareuser import RareUser
 from .post import Post
 from .postreaction import PostReaction
 from .posttag import PostTag

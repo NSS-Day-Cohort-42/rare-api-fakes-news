@@ -11,7 +11,7 @@ class Post(models.Model):
     user = models.ForeignKey("RareUser", on_delete=models.CASCADE, related_name="rareuser")
     category = models.ForeignKey("Category", on_delete=models.CASCADE, related_name="category")
     title = models.CharField(max_length=75)
-    publication_date = models.IntegerField()
+    publication_date = models.DateField()
     image_url = models.CharField(max_length=256)
     content = models.TextField()
     approved = models.BooleanField(default=False)
