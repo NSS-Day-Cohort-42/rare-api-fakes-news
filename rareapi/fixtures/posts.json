@@ -1,42 +1,29 @@
-  
 [
     {
         "model": "rareapi.post",
         "pk": 1,
         "fields": {
             "user": 1,
-            "category": 2,
-            "title": "Fake news",
+            "category": 1,
+            "title": "Post title",
             "publication_date": "2020-11-10",
-            "image_url": "",
-            "content": "Fake new's new title is fake snooze",
-            "approved": true
+            "image_url": "www.google.com",
+            "content": "Django is hard",
+            "approved": 1
         }
     },
+    
     {
         "model": "rareapi.post",
-        "pk": 2,
+        "pk": 1,
         "fields": {
             "user": 1,
-            "category": 2,
-            "title": "Title",
-            "publication_date": "2019-04-12",
-            "image_url": "",
-            "content": "Just some filler content..",
-            "approved": true
-        }
-    },
-    {
-        "model": "rareapi.post",
-        "pk": 3,
-        "fields": {
-            "user": 1,
-            "category": 2,
-            "title": "Title 2",
-            "publication_date": "2018-02-1",
-            "image_url": "",
-            "content": "Some more filler content",
-            "approved": true
+            "category": 1,
+            "title": "Post title",
+            "publication_date": "2020-09-09",
+            "image_url": "www.google.com",
+            "content": "Django is hard",
+            "approved": 1
         }
     }
 ]

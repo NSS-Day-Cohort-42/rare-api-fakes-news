@@ -15,11 +15,14 @@ Including another URLconf
 """
 from django.conf.urls import include
 from django.urls import path
-from rareapi.views import register_user, login_user, Posts
+from django.conf.urls import include
+from rareapi.views import register_user, login_user
+from rareapi.views import Posts
 from rest_framework import routers
 
+
 router = routers.DefaultRouter(trailing_slash=False)
-router.register(r'post', Posts, 'post')
+router.register(r'posts', Posts, 'post')
 
 urlpatterns = [
     path('', include(router.urls)),

@@ -6,7 +6,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers
 from rest_framework import status
-from rareapi.models import Post, RareUsers
+from rareapi.models import Post, RareUser
 
 
 class Posts(ViewSet):
@@ -49,7 +49,7 @@ class Posts(ViewSet):
 """Serializer for RareUser Info in a post"""         
 class PostRareUserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = RareUsers
+        model = RareUser
         fields = ('id', 'bio', 'user')
         depth = 1
 

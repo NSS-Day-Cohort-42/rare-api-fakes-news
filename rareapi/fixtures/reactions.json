@@ -1,0 +1,44 @@
+[
+    {
+        "model": "rareapi.reaction",
+        "pk": 1,
+        "fields": {
+            "label": "like",
+            "image_url": "👍"
+        }
+    },
+    {
+        "model": "rareapi.reaction",
+        "pk": 2,
+        "fields": {
+            "label": "love",
+            "image_url": "️❤️"
+        }
+    },
+    {
+        "model": "rareapi.reaction",
+        "pk": 3,
+        "fields": {
+            "label": "curious",
+            "image_url": "🤔"
+        }
+    },
+    {
+        "model": "rareapi.reaction",
+        "pk": 4,
+        "fields": {
+            "label": "insightful",
+            "image_url": "💡"
+        }
+    },
+    {
+        "model": "rareapi.reaction",
+        "pk": 5,
+        "fields": {
+            "label": "celebrate",
+            "image_url": "👏"
+        }
+    }
+    
+]
+

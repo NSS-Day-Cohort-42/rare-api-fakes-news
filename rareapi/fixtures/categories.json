@@ -3,21 +3,22 @@
         "model": "rareapi.category",
         "pk": 1,
         "fields": {
-            "label": "fake news"
+            "label": "Politics"
         }
     },
     {
         "model": "rareapi.category",
         "pk": 2,
         "fields": {
-            "label": "fake snooze"
+            "label": "Sports"
         }
     },
     {
         "model": "rareapi.category",
         "pk": 3,
         "fields": {
-            "label": "fake newz"
+            "label": "Self Help"
         }
     }
+    
 ]
