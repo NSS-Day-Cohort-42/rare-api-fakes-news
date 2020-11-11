@@ -1,7 +1,5 @@
 """Post model module"""
 from django.db import models
-# from . import RareUser, Category
-
 
 class Post(models.Model):
     """Post database model"""

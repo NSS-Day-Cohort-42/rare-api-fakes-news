@@ -104,7 +104,6 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('first_name',)
 
 
-
 """Serializer for RareUser Info in a post"""         
 class PostRareUserSerializer(serializers.ModelSerializer):
     user = UserSerializer(many=False)
