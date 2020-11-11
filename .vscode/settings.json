@@ -6,7 +6,5 @@
             "name": "rareapi",
             "database": "db.sqlite3"
         }
-    ],
-    "python.pythonPath": "/Users/emilyhartzell/.local/share/virtualenvs/rare-api-fakes-news-TNg87HnM/bin/python",
-    "python.linting.pylintEnabled": true
+    ]
 }
