@@ -12,6 +12,18 @@ from rareapi.models import RareUser
 
 
 class Posts(ViewSet):
+    
+    def list(self, request):
+
+        posts = Post.objects.all()
+
+        user_id = self.request.query_params.get('user_id', None)
+        if user_id is not None:
+            posts = posts.filter(user_id=user_id)
+
+        
+        serializer = PostSerializer(posts, many=True, context={'request': request})
+        return Response(serializer.data)
 
     def create(self, request):
         """Handle POST operations
@@ -65,17 +77,6 @@ class Posts(ViewSet):
             return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-    def list(self, request):
-
-        posts = Post.objects.all()
-
-        user_id = self.request.query_params.get('user_id', None)
-        if user_id is not None:
-            posts = posts.filter(user_id=user_id)
-
-        
-        serializer = PostSerializer(posts, many=True, context={'request': request})
-        return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
         """Handle GET requests for single game
