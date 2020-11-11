@@ -1,4 +1,3 @@
-
 """Category model module"""
 from django.db import models
 
