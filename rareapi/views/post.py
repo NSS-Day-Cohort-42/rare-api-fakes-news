@@ -14,11 +14,12 @@ class Posts(ViewSet):
     def list(self, request):
 
         posts = Post.objects.all()
-        user = request.auth.user
-        if user is not None:
-            posts = posts.filter(user_id=user.id)
 
         user_id = self.request.query_params.get('user_id', None)
+        if user_id is not None:
+            posts = posts.filter(user_id=user_id)
+
+        
         serializer = PostSerializer(posts, many=True, context={'request': request})
         return Response(serializer.data)
 
@@ -38,7 +39,8 @@ class Posts(ViewSet):
             return Response(serializer.data)
         except Exception as ex:
             return HttpResponseServerError(ex)
-
+        
+      
    
 
     
@@ -58,5 +60,5 @@ class PostSerializer(serializers.ModelSerializer):
     user = PostRareUserSerializer(many=False)
     class Meta:
         model = Post
-        fields = ('id', 'title', 'publication_date', 'content', 'user', 'category')
+        fields = ('id', 'title', 'publication_date', 'content', 'user', 'category', 'approved', 'image_url')
     
