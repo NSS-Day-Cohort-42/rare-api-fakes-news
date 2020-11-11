@@ -1,0 +1,12 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "rareapi",
+            "database": "db.sqlite3"
+        }
+    ],
+    "python.pythonPath": "/home/cwelshofer/.local/share/virtualenvs/rare-api-fakes-news-yr2E7QXU/bin/python",
+    "python.linting.pylintEnabled": true
+}

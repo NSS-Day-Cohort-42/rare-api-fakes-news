@@ -11,6 +11,19 @@
             "content": "Django is hard",
             "approved": 1
         }
-    }
+    },
     
+    {
+        "model": "rareapi.post",
+        "pk": 2,
+        "fields": {
+            "user": 2,
+            "category": 1,
+            "title": "Post title",
+            "publication_date": "2020-09-09",
+            "image_url": "www.google.com",
+            "content": "Django is hard",
+            "approved": 1
+        }
+    }
 ]
