@@ -157,3 +157,6 @@ rare.sql
 .vscode
 rare.sql
 rare.session.sql
+rare DB.session.sql
+rareapi.session.sql
+rareapi.sql
