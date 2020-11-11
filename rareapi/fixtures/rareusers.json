@@ -6,10 +6,8 @@
             "bio": "",
             "profile_image_url": "",
             "user": 1
-           
         }
     },
-
     {
         "model": "rareapi.rareuser",
         "pk": 2,
