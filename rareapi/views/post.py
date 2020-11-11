@@ -26,7 +26,7 @@ class Posts(ViewSet):
         user = request.auth.user
 
         if user is not None:
-            posts = posts.filter(user_id = user)
+            posts = posts.filter(user_id = user.id)
 
         serializer = PostSerializer(
             posts, many=True, context={'request': request})
