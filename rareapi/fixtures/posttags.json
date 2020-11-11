@@ -6,6 +6,16 @@
             "tag": 1,
             "post": 1
         }
+    },
+
+    {
+        "model": "rareapi.posttag",
+        "pk": 2,
+        "fields": {
+            "tag": 2,
+            "post": 2
+        }
     }
+    
     
 ]
