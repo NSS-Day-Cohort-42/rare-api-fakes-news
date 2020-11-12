@@ -18,6 +18,14 @@ class Posts(ViewSet):
 
         posts = Post.objects.all()
 
+        for post in posts:
+            post.created_by_current_user = None
+
+            if post.user.id == request.auth.user.id:
+                post.created_by_current_user = True
+            else:
+                post.created_by_current_user = False
+
         user_id = self.request.query_params.get('user_id', None)
         if user_id is not None:
             posts = posts.filter(user_id=user_id)
@@ -35,22 +43,12 @@ class Posts(ViewSet):
         Returns:
             Response -- JSON serialized game instance
         """
-
-        posts = Post.objects.all()
-
-        for post in posts:
-            post.created_by_current_user = None
-
-            try:
-                #LOGIC
-                Post.objects.get(user=request.auth.user)
-                post.created_by_current_user = True
-            except:
-                post.created_by_current_user = False
-
-
         try:
             post = Post.objects.get(pk=pk)
+            if post.user.id == request.auth.user.id:
+                post.created_by_current_user = True
+            else:
+                post.created_by_current_user = False
             serializer = PostSerializer(post, context={'request': request})
             return Response(serializer.data)
         except Exception as ex:
