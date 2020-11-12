@@ -6,5 +6,6 @@
             "name": "rareapi",
             "database": "db.sqlite3"
         }
-    ]
+    ],
+    "python.linting.pylintEnabled": true
 }
