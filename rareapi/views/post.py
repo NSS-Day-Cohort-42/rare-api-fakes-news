@@ -9,6 +9,7 @@ from rest_framework.viewsets import ViewSet
 from rareapi.models import Category
 from rareapi.models import Post
 from rareapi.models import RareUser
+from rareapi.models import Tag
 
 
 class Posts(ViewSet):
@@ -116,16 +117,16 @@ class Posts(ViewSet):
             return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
+
+
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('first_name',)
 
-
-"""Serializer for RareUser Info in a post"""
-
-
 class PostRareUserSerializer(serializers.ModelSerializer):
+    """Serializer for RareUser Info from a post"""
     user = UserSerializer(many=False)
 
     class Meta:
@@ -133,11 +134,16 @@ class PostRareUserSerializer(serializers.ModelSerializer):
         fields = ('id', 'bio', 'user')
 
 
-"""Basic Serializer for single post"""
 
+# class PostTagSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Tag
+#         fields = ('id', 'label')
 
 class PostSerializer(serializers.ModelSerializer):
+    """Basic Serializer for a post"""
     user = PostRareUserSerializer(many=False)
+    # tags = PostTagSerializer(many=True)
 
     class Meta:
         model = Post

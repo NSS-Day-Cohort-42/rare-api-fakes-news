@@ -12,7 +12,7 @@ class PostTags(ViewSet):
         """ GET all pt objects """
         posttags = PostTag.objects.all()
 
-        post_id = self.request.query_params.get("postId", None)
+        post_id = self.request.query_params.get("post_id", None)
         if post_id is not None:
             posttags = posttags.filter(post_id=post_id)
         

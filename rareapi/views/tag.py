@@ -12,6 +12,11 @@ class Tags(ViewSet):
         """ handles GET all"""
         tags = Tag.objects.all()
 
+        post_id = self.request.query_params.get('post_id', None)
+        if post_id is not None:
+            tags = tags.filter(post_id=post_id)
+
+
         serializer = TagSerializer(tags, many=True, context={'request': request})
         return Response(serializer.data)
 
