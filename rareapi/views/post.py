@@ -17,6 +17,11 @@ class Posts(ViewSet):
     def list(self, request):
 
         posts = Post.objects.all()
+        approvedPosts = []
+
+        for post in posts:
+            if post.approved == True:
+                approvedPosts.append(post)
 
         for post in posts:
             post.created_by_current_user = None
@@ -35,7 +40,7 @@ class Posts(ViewSet):
             posts = posts.filter(category_id=category_id)
 
         serializer = PostSerializer(
-            posts, many=True, context={'request': request})
+            approvedPosts, many=True, context={'request': request})
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
@@ -67,7 +72,7 @@ class Posts(ViewSet):
             post.content = request.data["content"]
             post.publication_date = request.data["publication_date"]
             post.image_url = request.data["image_url"]
-            post.approved = 1
+        
         except KeyError as ex:
             return Response({'message': 'Incorrect key was sent in request'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -97,6 +102,7 @@ class Posts(ViewSet):
         post.title = request.data["title"]
         post.publication_date = request.data["publication_date"]
         post.content = request.data["content"]
+        post.image_url = request.data["image_url"]
         post.user = rareuser
 
         category = Category.objects.get(pk=request.data["category_id"])
@@ -155,5 +161,5 @@ class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = ('id', 'title', 'publication_date', 'content',
-                  'user', 'category', 'approved', 'image_url', 'created_by_current_user')
+                  'user', 'category_id', 'category', 'approved', 'image_url', 'created_by_current_user')
         depth = 1
