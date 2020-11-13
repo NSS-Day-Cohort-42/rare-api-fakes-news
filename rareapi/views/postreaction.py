@@ -31,6 +31,7 @@ class PostReactions(ViewSet):
         #check if post exists
         try:
             post = Post.objects.get(id=post_id)
+            
         except Post.DoesNotExist:
             return Response({'message: invalid post id'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
         
