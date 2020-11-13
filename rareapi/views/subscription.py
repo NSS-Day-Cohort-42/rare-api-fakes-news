@@ -45,7 +45,7 @@ class Subscriptions(ViewSet):
 
             return Response(status=status.HTTP_201_CREATED, data=serializer.data)
 
-        except supscription.DoesNotExist as ex:
+        except Subscription.DoesNotExist as ex:
             return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
 
 
