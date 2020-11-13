@@ -26,6 +26,8 @@ class RareUsers(ViewSet):
         try:
             user = RareUser.objects.get(pk=pk)
             
+            #logic to set an unmapped property on RareUser 
+            #will let front end determine if the user retrieved by this function is the current user
             if request.auth.user.id == int(pk):
                 user.is_current_user = True
             else:
