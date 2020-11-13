@@ -14,6 +14,7 @@ class CurrentUser(ViewSet):
     def list(self, request):
         """ handles GET currently logged in user """
 
+        #the code in the parentheses is like a WHERE clause in SQL
         user = RareUser.objects.get(user=request.auth.user)
 
         #imported the RareUserSerializer from rareuser.py to use in this module
