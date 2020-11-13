@@ -1,4 +1,5 @@
 from django.http import HttpResponseServerError
+from rest_framework.fields import NullBooleanField
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers
@@ -6,6 +7,7 @@ from rest_framework import status
 from rareapi.models import Subscription
 from django.contrib.auth.models import User
 from rareapi.models import RareUser
+from datetime import date
 
 
 class Subscriptions(ViewSet):
@@ -18,27 +20,16 @@ class Subscriptions(ViewSet):
         serializer = SubscriptionSerializer(followings, many=True, context={'request': request})
         return Response(serializer.data)
 
-    def retrieve(self, request, pk=None):
-        try:
-            following = Following.objects.get(pk=pk)
-            serializer = FollowingSerializer(
-                following, context={'request': request}
-            )
-            return Response(serializer.data)
-        except Exception as ex:
-            return HttpResponseServerError(ex)
-
     def create(self, request):
-        new_following = Following()
+        new_subscription = Subscription()
 
-        new_following.user = request.auth.user
-        new_following.following = User.objects.get(pk=request.data["following_id"])
+        new_subscription.follower = request.auth.user
+        new_subscription.author = User.objects.get(pk=request.data["author_id"])
+        new_subscription.created_on = date.today()
 
-        new_following.save()
+        new_subscription.save()
 
-        serializer = FollowingSerializer(
-            new_following, context={'request': request}
-        )
+        serializer = SubscriptionSerializer(new_subscription, context={'request': request})
         return Response(serializer.data)
 
     def patch(self, request, pk=None):
@@ -56,18 +47,6 @@ class Subscriptions(ViewSet):
             return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
 
 
-# class UserSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = User
-#         fields = ('first_name',)
-
-# class RareUserSerializer(serializers.ModelSerializer):
-#     """Serializer for RareUser Info from a post"""
-#     user = UserSerializer(many=False)
-
-#     class Meta:
-#         model = RareUser
-#         fields = ('id', 'bio', 'user')
 
 class SubscriptionSerializer(serializers.ModelSerializer):
     # author = UserSerializer(many=False)
