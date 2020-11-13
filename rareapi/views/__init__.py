@@ -7,5 +7,6 @@ from .post import Posts
 from .posttag import PostTags
 from .rareuser import RareUsers
 from .reaction import Reactions
+from .subscription import Subscriptions
 from .tag import Tags
 
