@@ -22,9 +22,17 @@ class RareUsers(ViewSet):
         Returns:
             Response -- JSON serialized game instance
         """
+       
         try:
-           
             user = RareUser.objects.get(pk=pk)
+            
+            #logic to set an unmapped property on RareUser 
+            #will let front end determine if the user retrieved by this function is the current user
+            if request.auth.user.id == int(pk):
+                user.is_current_user = True
+            else:
+                user.is_current_user = False
+
             serializer = RareUserSerializer(user, context={'request': request})
             return Response(serializer.data)
         except Exception as ex:
@@ -42,4 +50,4 @@ class RareUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = RareUser
-        fields = ('id', 'bio', 'user')
+        fields = ('id', 'bio', 'user', 'is_current_user')

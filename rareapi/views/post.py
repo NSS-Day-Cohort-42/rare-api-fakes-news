@@ -18,6 +18,14 @@ class Posts(ViewSet):
 
         posts = Post.objects.all()
 
+        for post in posts:
+            post.created_by_current_user = None
+
+            if post.user.id == request.auth.user.id:
+                post.created_by_current_user = True
+            else:
+                post.created_by_current_user = False
+
         user_id = self.request.query_params.get('user_id', None)
         if user_id is not None:
             posts = posts.filter(user_id=user_id)
@@ -36,12 +44,11 @@ class Posts(ViewSet):
             Response -- JSON serialized game instance
         """
         try:
-            # `pk` is a parameter to this function, and
-            # Django parses it from the URL route parameter
-            #   http://localhost:8000/games/2
-            #
-            # The `2` at the end of the route becomes `pk`
             post = Post.objects.get(pk=pk)
+            if post.user.id == request.auth.user.id:
+                post.created_by_current_user = True
+            else:
+                post.created_by_current_user = False
             serializer = PostSerializer(post, context={'request': request})
             return Response(serializer.data)
         except Exception as ex:
@@ -148,5 +155,5 @@ class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = ('id', 'title', 'publication_date', 'content',
-                  'user', 'category', 'approved', 'image_url')
+                  'user', 'category', 'approved', 'image_url', 'created_by_current_user')
         depth = 1
