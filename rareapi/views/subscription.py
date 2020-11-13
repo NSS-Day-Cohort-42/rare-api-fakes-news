@@ -24,9 +24,9 @@ class Subscriptions(ViewSet):
         new_subscription = Subscription()
 
         user = RareUser.objects.get(user=request.auth.user)
-        
-        new_subscription.follower = int(user.id)
-        new_subscription.author = User.objects.get(pk=request.data["author_id"])
+        new_subscription.follower = user
+
+        new_subscription.author = RareUser.objects.get(pk=request.data["author_id"])
         new_subscription.created_on = date.today()
 
         new_subscription.save()
@@ -36,22 +36,21 @@ class Subscriptions(ViewSet):
 
     def patch(self, request, pk=None):
         try:
-            post = SneakerPost.objects.get(pk=pk)
-            post.description = request.data["description"]
+            subscription = Subscription.objects.get(pk=pk)
+            subscription.ended_on = date.today()
 
-            serializer = PostSerializer(post, context={'request': request}, partial=True)
+            serializer = SubscriptionSerializer(subscription, context={'request': request}, partial=True)
 
-            post.save()
+            subscription.save()
 
             return Response(status=status.HTTP_201_CREATED, data=serializer.data)
 
-        except SneakerPost.DoesNotExist as ex:
+        except supscription.DoesNotExist as ex:
             return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
 
 
 
 class SubscriptionSerializer(serializers.ModelSerializer):
-    # author = UserSerializer(many=False)
 
     class Meta:
         model = Subscription
