@@ -23,7 +23,9 @@ class Subscriptions(ViewSet):
     def create(self, request):
         new_subscription = Subscription()
 
-        new_subscription.follower = request.auth.user
+        user = RareUser.objects.get(user=request.auth.user)
+        
+        new_subscription.follower = int(user.id)
         new_subscription.author = User.objects.get(pk=request.data["author_id"])
         new_subscription.created_on = date.today()
 
