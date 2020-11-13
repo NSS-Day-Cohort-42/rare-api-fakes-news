@@ -8,16 +8,14 @@ from django.contrib.auth.models import User
 from rareapi.models import RareUser
 
 
-
-
-
 class Subscriptions(ViewSet):
 
     def list(self, request):
+
+        # following = RareUser.objects.get(user=request.auth.user)
+
         followings = Subscription.objects.all()
-        serializer = SubscriptionSerializer(
-            followings, many=True, context={'request': request}
-        )
+        serializer = SubscriptionSerializer(followings, many=True, context={'request': request})
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
@@ -58,23 +56,23 @@ class Subscriptions(ViewSet):
             return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
 
 
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ('first_name',)
+# class UserSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = User
+#         fields = ('first_name',)
 
-class RareUserSerializer(serializers.ModelSerializer):
-    """Serializer for RareUser Info from a post"""
-    user = UserSerializer(many=False)
+# class RareUserSerializer(serializers.ModelSerializer):
+#     """Serializer for RareUser Info from a post"""
+#     user = UserSerializer(many=False)
 
-    class Meta:
-        model = RareUser
-        fields = ('id', 'bio', 'user')
+#     class Meta:
+#         model = RareUser
+#         fields = ('id', 'bio', 'user')
 
-class SubscriptionSerializer(serializers.HyperlinkedModelSerializer):
-    author = UserSerializer(many=False)
-    following = RareUser.objects.get(user=request.auth.user)
+class SubscriptionSerializer(serializers.ModelSerializer):
+    # author = UserSerializer(many=False)
 
     class Meta:
         model = Subscription
-        fields = ('id', 'created_on', 'ended_on', 'author', 'following_id')
+        fields = ('id', 'created_on', 'ended_on', 'author', 'follower')
+        # depth = 1
