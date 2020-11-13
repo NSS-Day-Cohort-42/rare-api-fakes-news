@@ -72,7 +72,7 @@ class Posts(ViewSet):
             post.content = request.data["content"]
             post.publication_date = request.data["publication_date"]
             post.image_url = request.data["image_url"]
-            post.approved = 0
+        
         except KeyError as ex:
             return Response({'message': 'Incorrect key was sent in request'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -102,6 +102,7 @@ class Posts(ViewSet):
         post.title = request.data["title"]
         post.publication_date = request.data["publication_date"]
         post.content = request.data["content"]
+        post.image_url = request.data["image_url"]
         post.user = rareuser
 
         category = Category.objects.get(pk=request.data["category_id"])
