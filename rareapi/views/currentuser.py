@@ -1,4 +1,4 @@
-"""Rare User Views Module"""
+""" CurrentUser ViewSet Module"""
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.http import HttpResponseServerError
@@ -16,6 +16,7 @@ class CurrentUser(ViewSet):
 
         user = RareUser.objects.get(user=request.auth.user)
 
+        #imported the RareUserSerializer from rareuser.py to use in this module
         serializer = RareUserSerializer(user, many=False, context={'request': request})
         return Response(serializer.data)
 
