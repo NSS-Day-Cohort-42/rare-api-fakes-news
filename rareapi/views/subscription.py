@@ -34,16 +34,14 @@ class Subscriptions(ViewSet):
         serializer = SubscriptionSerializer(new_subscription, context={'request': request})
         return Response(serializer.data)
 
-    def patch(self, request, pk=None):
+    def partial_update(self, request, pk=None):
         try:
             subscription = Subscription.objects.get(pk=pk)
             subscription.ended_on = date.today()
 
-            serializer = SubscriptionSerializer(subscription, context={'request': request}, partial=True)
-
             subscription.save()
 
-            return Response(status=status.HTTP_201_CREATED, data=serializer.data)
+            return Response(status=status.HTTP_204_NO_CONTENT, data=None)
 
         except Subscription.DoesNotExist as ex:
             return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
