@@ -17,15 +17,9 @@ class Posts(ViewSet):
     def list(self, request):
 
         posts = Post.objects.all()
-        # approved_posts = []
-        print(type(posts))
 
         if not request.auth.user.is_staff:
-
-            for post in posts:
-                if post.approved:
-                    # posts.append(post)
-                    posts
+            posts = posts.filter(approved = True)
 
         for post in posts:
             post.created_by_current_user = None
