@@ -35,23 +35,23 @@ class Subscriptions(ViewSet):
         serializer = SubscriptionSerializer(new_subscription, context={'request': request})
         return Response(serializer.data)
 
-    @action(methods=['get', 'post'], detail=True)
-    def unsubscribe(self, request, author=None):
-        if request.method == 'POST':
-            sub = Subscription.objects.get(author=author, follower=request.auth.user)
+    # @action(methods=['get', 'post'], detail=True)
+    # def unsubscribe(self, request, author=None):
+    #     if request.method == 'POST':
+    #         sub = Subscription.objects.get(author=author, follower=request.auth.user)
 
-            try:
-                subscription = Subscription()
-                subscription.ended_on = date.today()
-                subscription.save()
+    #         try:
+    #             subscription = Subscription()
+    #             subscription.ended_on = date.today()
+    #             subscription.save()
 
-                return Response({}, status=status.HTTP_201_CREATED)
+    #             return Response({}, status=status.HTTP_201_CREATED)
 
         
-        # If the client performs a request with a method of
-        # anything other than POST or DELETE, tell client that
-        # the method is not supported
-        return Response({}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    #     # If the client performs a request with a method of
+    #     # anything other than POST or DELETE, tell client that
+    #     # the method is not supported
+    #     return Response({}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
 
