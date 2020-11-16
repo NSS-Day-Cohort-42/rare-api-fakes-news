@@ -9,6 +9,7 @@ from rareapi.models import Subscription
 from django.contrib.auth.models import User
 from rareapi.models import RareUser
 from datetime import date
+from rest_framework.decorators import action
 
 
 class Subscriptions(ViewSet):
@@ -35,23 +36,23 @@ class Subscriptions(ViewSet):
         serializer = SubscriptionSerializer(new_subscription, context={'request': request})
         return Response(serializer.data)
 
-    # @action(methods=['get', 'post'], detail=True)
-    # def unsubscribe(self, request, author=None):
-    #     if request.method == 'POST':
-    #         sub = Subscription.objects.get(author=author, follower=request.auth.user)
+    @action(methods=['get', 'put'], detail=True)
+    def unsubscribe(self, request, pk=None):
+        if request.method == 'PUT':
 
-    #         try:
-    #             subscription = Subscription()
-    #             subscription.ended_on = date.today()
-    #             subscription.save()
+            #define author using pk retrieved from url
+            author = RareUser.objects.get(pk=pk)
 
-    #             return Response({}, status=status.HTTP_201_CREATED)
+            #get the subscription object where the author equals the userId (from front end)
+            # where follow equals the logged in user
+            # and where ended_on === null
+            sub = Subscription.objects.get(author=author, follower=request.auth.user.id, ended_on=None)
 
-        
-    #     # If the client performs a request with a method of
-    #     # anything other than POST or DELETE, tell client that
-    #     # the method is not supported
-    #     return Response({}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+            #change ended_on to today and save
+            sub.ended_on = date.today()
+            sub.save()
+
+            return Response(None, status=status.HTTP_204_NO_CONTENT)
 
 
 
