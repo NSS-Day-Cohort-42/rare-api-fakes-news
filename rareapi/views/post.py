@@ -1,4 +1,5 @@
-"""View module for handling requests about games"""
+"""View module for handling requests about posts"""
+from datetime import date
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.http import HttpResponseServerError
@@ -20,7 +21,7 @@ class Posts(ViewSet):
         approvedPosts = []
 
         for post in posts:
-            if post.approved == True:
+            if post.approved == True and post.publication_date < date.today():
                 approvedPosts.append(post)
 
         for post in posts:
