@@ -5,6 +5,7 @@ from django.core.exceptions import ValidationError
 from django.http import HttpResponseServerError
 from rest_framework import serializers
 from rest_framework import status
+from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 from rareapi.models import Category
@@ -18,11 +19,10 @@ class Posts(ViewSet):
     def list(self, request):
 
         posts = Post.objects.all()
-        approvedPosts = []
 
-        for post in posts:
-            if post.approved == True and post.publication_date < date.today():
-                approvedPosts.append(post)
+        if not request.auth.user.is_staff:
+            posts = posts.filter(approved = True).filter(publication_date__lt=date.today())
+            
 
         for post in posts:
             post.created_by_current_user = None
@@ -41,7 +41,7 @@ class Posts(ViewSet):
             posts = posts.filter(category_id=category_id)
 
         serializer = PostSerializer(
-            approvedPosts, many=True, context={'request': request})
+            posts, many=True, context={'request': request})
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
@@ -129,6 +129,17 @@ class Posts(ViewSet):
 
         except Exception as ex:
             return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    @action(methods=['patch'], detail=True)
+    def approval(self, request, pk=None):
+
+        post = Post.objects.get(pk=pk)
+
+        post.approved = True
+        post.save()
+        
+        return Response(None, status=status.HTTP_204_NO_CONTENT)
+
 
 
 
