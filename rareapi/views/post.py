@@ -17,11 +17,15 @@ class Posts(ViewSet):
     def list(self, request):
 
         posts = Post.objects.all()
-        approvedPosts = []
+        # approved_posts = []
+        print(type(posts))
 
-        for post in posts:
-            if post.approved == True:
-                approvedPosts.append(post)
+        if not request.auth.user.is_staff:
+
+            for post in posts:
+                if post.approved:
+                    # posts.append(post)
+                    posts
 
         for post in posts:
             post.created_by_current_user = None
@@ -40,7 +44,7 @@ class Posts(ViewSet):
             posts = posts.filter(category_id=category_id)
 
         serializer = PostSerializer(
-            approvedPosts, many=True, context={'request': request})
+            posts, many=True, context={'request': request})
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
