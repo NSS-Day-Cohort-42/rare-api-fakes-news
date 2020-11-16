@@ -15,7 +15,6 @@ class Subscriptions(ViewSet):
 
     def list(self, request):
 
-        # following = RareUser.objects.get(user=request.auth.user)
 
         followings = Subscription.objects.all()
         serializer = SubscriptionSerializer(followings, many=True, context={'request': request})
