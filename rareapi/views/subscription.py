@@ -1,3 +1,4 @@
+from rareapi.models import subscription
 from django.http import HttpResponseServerError
 from rest_framework.fields import NullBooleanField
 from rest_framework.viewsets import ViewSet
@@ -34,17 +35,25 @@ class Subscriptions(ViewSet):
         serializer = SubscriptionSerializer(new_subscription, context={'request': request})
         return Response(serializer.data)
 
-    def partial_update(self, request, pk=None):
-        try:
-            subscription = Subscription.objects.get(pk=pk)
-            subscription.ended_on = date.today()
+    @action(methods=['get', 'post'], detail=True)
+    def unsubscribe(self, request, author=None):
+        if request.method == 'POST':
+            sub = Subscription.objects.get(author=author, follower=request.auth.user)
 
-            subscription.save()
+            try:
+                subscription = Subscription()
+                subscription.ended_on = date.today()
+                subscription.save()
 
-            return Response(status=status.HTTP_204_NO_CONTENT, data=None)
+                return Response({}, status=status.HTTP_201_CREATED)
 
-        except Subscription.DoesNotExist as ex:
-            return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
+        
+        # If the client performs a request with a method of
+        # anything other than POST or DELETE, tell client that
+        # the method is not supported
+        return Response({}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+
 
 
 
