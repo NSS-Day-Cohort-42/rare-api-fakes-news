@@ -15,8 +15,16 @@ class Subscriptions(ViewSet):
 
     def list(self, request):
 
+        #localhost:8000/subscriptions?author_id=2
 
         followings = Subscription.objects.all()
+
+        author_id = self.request.query_params.get('author_id', None)
+        if author_id is not None:
+            followings = followings.filter(author_id=author_id, follower_id=request.auth.user.id)
+            #get the last object in the list
+            #do this logic in a retrieve???
+
         serializer = SubscriptionSerializer(followings, many=True, context={'request': request})
         return Response(serializer.data)
 
