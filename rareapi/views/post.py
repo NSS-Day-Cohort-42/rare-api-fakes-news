@@ -1,4 +1,5 @@
-"""View module for handling requests about games"""
+"""View module for handling requests about posts"""
+from datetime import date
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.http import HttpResponseServerError
@@ -19,7 +20,7 @@ class Posts(ViewSet):
         posts = Post.objects.all()
 
         if not request.auth.user.is_staff:
-            posts = posts.filter(approved = True)
+            posts = posts.filter(approved = True).exclude(posts.publication_date > date.today())
 
         for post in posts:
             post.created_by_current_user = None
