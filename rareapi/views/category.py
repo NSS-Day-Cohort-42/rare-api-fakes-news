@@ -23,6 +23,19 @@ class Categories(ViewSet):
             categories, many=True, context={'request': request})
         return Response(serializer.data)
 
+    def retrieve(self, request, pk=None):
+        """Handle GET requests for single category
+        Returns:
+            Response -- JSON serialized category instance
+        """
+        try:
+           
+            category = Category.objects.get(pk=pk)
+            serializer = CategorySerializer(category, context={'request': request})
+            return Response(serializer.data)
+        except Exception as ex:
+            return HttpResponseServerError(ex)
+
     def create(self, request):
         """Handle POST operations
 

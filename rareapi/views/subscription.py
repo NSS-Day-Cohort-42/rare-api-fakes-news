@@ -21,14 +21,14 @@ class Subscriptions(ViewSet):
 
         author_id = self.request.query_params.get('author_id', None)
 
-        if author_id is not None:
-
+        if author_id is not None and int(author_id) is not request.auth.user.id :
             followings = followings.filter(author_id=author_id, follower_id=request.auth.user.id)
-            #get the last object in the list
-            #do this logic in a retrieve???
             followings = followings[len(followings) - 1]
-
             serializer = SubscriptionSerializer(followings, many=False, context={'request': request})
+
+        elif author_id is not None and int(author_id) is request.auth.user.id:
+            followings = followings.filter(author_id=author_id)
+            serializer = SubscriptionSerializer(followings, many=True, context={'request': request})
 
         else:
             serializer = SubscriptionSerializer(followings, many=True, context={'request': request})
