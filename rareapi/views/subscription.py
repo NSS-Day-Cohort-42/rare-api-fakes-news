@@ -26,8 +26,13 @@ class Subscriptions(ViewSet):
             #do this logic in a retrieve???
             followings = followings[len(followings) - 1]
 
-        serializer = SubscriptionSerializer(followings, context={'request': request})
+            serializer = SubscriptionSerializer(followings, many=False, context={'request': request})
+
+        else:
+            serializer = SubscriptionSerializer(followings, many=True, context={'request': request})
+            
         return Response(serializer.data)
+
 
     def create(self, request):
         new_subscription = Subscription()
