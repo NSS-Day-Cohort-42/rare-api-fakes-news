@@ -24,8 +24,9 @@ class Subscriptions(ViewSet):
             followings = followings.filter(author_id=author_id, follower_id=request.auth.user.id)
             #get the last object in the list
             #do this logic in a retrieve???
+            followings = followings[len(followings) - 1]
 
-        serializer = SubscriptionSerializer(followings, many=True, context={'request': request})
+        serializer = SubscriptionSerializer(followings, context={'request': request})
         return Response(serializer.data)
 
     def create(self, request):
