@@ -130,7 +130,7 @@ class Posts(ViewSet):
         except Exception as ex:
             return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 #TODO:change to PUT
-    @action(methods=['patch'], detail=True)
+    @action(methods=['PUT'], detail=True)
     def approve(self, request, pk=None):
 
         post = Post.objects.get(pk=pk)
