@@ -12,34 +12,6 @@ from rareapi.models import Comment, RareUser, Post
 class Comments(ViewSet):
     """Rare comments"""
 
-    def create(self, request):
-
-        user = RareUser.objects.get(user=request.auth.user)
-        post = Post.objects.get(pk=request.data["post_id"])
-
-        comment = Comment()
-        comment.post = post
-        comment.content = request.data["content"]
-        comment.subject = request.data["subject"]
-
-        try:
-            comment.save()
-            serializer = CommentSerializer(comment, context={'request': request})
-            return Response(serializer.data)
-
-        except ValidationError as ex:
-            return Response({"reason": ex.message}, status=status.HTTP_400_BAD_REQUEST)
-
-    def retrieve(self, request, pk=None):
-        """Handle GET requests for single comment
-        """
-        try:
-            comment = Comment.objects.get(pk=pk)
-            serializer = CommentSerializer(comment, context={'request': request})
-            return Response(serializer.data)
-        except Exception:
-            return HttpResponseServerError()
-
     def list(self, request):
         """Handle GET requests to comments resource
         Returns:
@@ -64,6 +36,15 @@ class Comments(ViewSet):
             comments, many=True, context={'request': request})
         return Response(serializer.data)
 
+    def retrieve(self, request, pk=None):
+        """Handle GET requests for single comment
+        """
+        try:
+            comment = Comment.objects.get(pk=pk)
+            serializer = CommentSerializer(comment, context={'request': request})
+            return Response(serializer.data)
+        except Exception:
+            return HttpResponseServerError()
 
     def destroy(self, request, pk=None):
         """Handle DELETE requests for a single comment
