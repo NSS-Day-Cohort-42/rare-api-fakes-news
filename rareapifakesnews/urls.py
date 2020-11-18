@@ -16,7 +16,8 @@ Including another URLconf
 from django.conf.urls import include
 from django.urls import path
 from rareapi.views import register_user, login_user
-from rareapi.views import Categories, PostReactions, Posts, PostTags, Reactions, Tags, RareUsers, CurrentUser
+from rareapi.views.subscription import Subscriptions
+from rareapi.views import Categories, PostReactions, Posts, PostTags, Reactions, Tags, RareUsers, CurrentUser, Subscriptions
 from rest_framework import routers
 
 
@@ -26,6 +27,7 @@ router.register(r'currentuser', CurrentUser, 'rareuser')
 router.register(r'postreactions', PostReactions, 'postreaction')
 router.register(r'posts', Posts, 'post')
 router.register(r'posttags', PostTags, 'posttag')
+router.register(r'subscriptions', Subscriptions, 'subscription')
 router.register(r'users', RareUsers, 'rareuser')
 router.register(r'reactions', Reactions, 'reaction')
 router.register(r'tags', Tags, 'tag')
