@@ -42,7 +42,7 @@ class RareUsers(ViewSet):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'username', 'email', 'date_joined', 'is_staff')
+        fields = ('first_name', 'last_name', 'username', 'email', 'date_joined', 'is_staff', 'is_active')
 
 class RareUserSerializer(serializers.ModelSerializer):
     """Serializer for RareUser Info from a post"""
