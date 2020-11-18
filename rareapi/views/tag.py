@@ -5,6 +5,7 @@ from rest_framework import serializers, status
 from rest_framework.response import Response
 from rareapi.models import Tag
 
+
 class Tags(ViewSet):
     """Tags Class"""
 
@@ -61,8 +62,16 @@ class Tags(ViewSet):
         except Exception as ex:
             return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+    def update(self, request, pk=None):
+        """Handle PUT requests for posts"""
 
+        tag = Tag.objects.get(pk=pk)
+        tag.label = request.data["label"]
+        tag.save()
 
+       
+
+        return Response({}, status=status.HTTP_204_NO_CONTENT)
 
 
 class TagSerializer(serializers.ModelSerializer):
