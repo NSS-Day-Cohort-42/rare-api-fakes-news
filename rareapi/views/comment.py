@@ -63,6 +63,45 @@ class Comments(ViewSet):
         except Exception as ex:
             return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+    def create(self, request):
+
+            author = RareUser.objects.get(user=request.auth.user)
+            post = Post.objects.get(pk=request.data["post_id"])
+
+            comment = Comment()
+            comment.post = post
+            comment.author = author
+            comment.content = request.data["content"]
+            comment.subject = request.data["subject"]
+            comment.created_on = request.data["created_on"]
+
+            try:
+                comment.save()
+                serializer = CommentSerializer(comment, context={'request': request})
+                return Response(serializer.data)
+
+            except ValidationError as ex:
+                return Response({"reason": ex.message}, status=status.HTTP_400_BAD_REQUEST)
+
+    def update(self, request, pk=None):
+            """Handle PUT requests for a comment
+            Returns:
+                Response -- Empty body with 204 status code
+            """
+            author = RareUser.objects.get(user=request.auth.user)
+            post = Post.objects.get(pk=request.data["post_id"])
+
+            comment = Comment.objects.get(pk=pk)
+            comment.post = post
+            comment.author = author
+            comment.content = request.data["content"]
+            comment.subject = request.data["subject"]
+            
+            comment.save()
+
+            return Response({}, status=status.HTTP_204_NO_CONTENT)
+
+
 class CommentAuthorSerializer(serializers.ModelSerializer):
     """JSON serializer for post author's related Django user"""
     class Meta:
