@@ -11,7 +11,7 @@ from rest_framework.viewsets import ViewSet
 from rareapi.models import Category
 from rareapi.models import Post
 from rareapi.models import RareUser
-from rareapi.models import Tag
+from rareapi.models import PostTag, Tag
 
 
 class Posts(ViewSet):
@@ -161,8 +161,8 @@ class PostRareUserSerializer(serializers.ModelSerializer):
 
 # class PostTagSerializer(serializers.ModelSerializer):
 #     class Meta:
-#         model = Tag
-#         fields = ('id', 'label')
+#         model = PostTag
+#         fields = ('id', 'tag', 'post')
 
 class PostSerializer(serializers.ModelSerializer):
     """Basic Serializer for a post"""
