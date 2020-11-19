@@ -25,6 +25,7 @@ class Posts(ViewSet):
             
 
         for post in posts:
+
             post.created_by_current_user = None
 
             if post.user.id == request.auth.user.id:
@@ -129,6 +130,7 @@ class Posts(ViewSet):
 
         except Exception as ex:
             return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
     @action(methods=['PUT'], detail=True)
     def approve(self, request, pk=None):
 
@@ -157,20 +159,13 @@ class PostRareUserSerializer(serializers.ModelSerializer):
         model = RareUser
         fields = ('id', 'bio', 'user')
 
-
-
-# class PostTagSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = PostTag
-#         fields = ('id', 'tag', 'post')
-
 class PostSerializer(serializers.ModelSerializer):
     """Basic Serializer for a post"""
     user = PostRareUserSerializer(many=False)
-    # tags = PostTagSerializer(many=True)
 
     class Meta:
         model = Post
         fields = ('id', 'title', 'publication_date', 'content',
-                  'user', 'category_id', 'category', 'approved', 'image_url', 'created_by_current_user')
+                  'user', 'category_id', 'category', 'approved', 
+                  'image_url', 'created_by_current_user')
         depth = 1
