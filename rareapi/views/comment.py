@@ -106,7 +106,7 @@ class CommentAuthorSerializer(serializers.ModelSerializer):
     """JSON serializer for post author's related Django user"""
     class Meta:
         model = RareUser
-        fields = ['id', "user"]
+        fields = ['id', "username"]
 
 class PostSerializer(serializers.HyperlinkedModelSerializer):
     """JSON serializer for post"""

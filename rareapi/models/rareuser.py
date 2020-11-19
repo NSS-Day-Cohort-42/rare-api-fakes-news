@@ -9,6 +9,9 @@ class RareUser(models.Model):
     profile_image_url = models.CharField(max_length=500)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
+    @property
+    def username(self):
+        return self.user.username
 
     @property
     def is_current_user(self):
