@@ -13,8 +13,13 @@ class PostTags(ViewSet):
         posttags = PostTag.objects.all()
 
         post_id = self.request.query_params.get("post_id", None)
+        tag_id = self.request.query_params.get("tag_id", None)
+
         if post_id is not None:
             posttags = posttags.filter(post_id=post_id)
+        
+        if tag_id is not None:
+            posttags = posttags.filter(tag_id=tag_id)
         
         serializer = PostTagSerializer(posttags, many=True, context={'request', request})
         return Response(serializer.data)
