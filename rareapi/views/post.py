@@ -26,10 +26,6 @@ class Posts(ViewSet):
 
         for post in posts:
 
-            # posttags = PostTag.objects.filter(post_id=post.id)
-            # for posttag in posttags:
-            #     post.tags = posttag
-
             post.created_by_current_user = None
 
             if post.user.id == request.auth.user.id:
@@ -163,15 +159,9 @@ class PostRareUserSerializer(serializers.ModelSerializer):
         model = RareUser
         fields = ('id', 'bio', 'user')
 
-# class PostTagSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Tag
-#         fields = ('id', 'label')
-
 class PostSerializer(serializers.ModelSerializer):
     """Basic Serializer for a post"""
     user = PostRareUserSerializer(many=False)
-    # tags = PostTagSerializer(many=True)
 
     class Meta:
         model = Post
