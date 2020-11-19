@@ -74,6 +74,6 @@ class PostTagSerializer(serializers.ModelSerializer):
     class Meta:
         model = PostTag
         fields = ('id', 'tag_id', 'tag', 'post_id', 'post')
-        depth = 1
+        depth = 3
         #so we can access whole tag and post object
 

@@ -20,3 +20,4 @@ class Post(models.Model):
     @created_by_current_user.setter
     def created_by_current_user(self, value):
         self.__created_by_current_user = value
+
